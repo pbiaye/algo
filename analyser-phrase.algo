@@ -1,0 +1,77 @@
+ALGORITHM algorithm_name
+VAR
+
+/* Variables */
+    longueur_phrase : INTEGER
+    nombre_mots : INTEGER
+    nombre_voyelles : INTEGER
+    mot_en_cours : STRING
+    caractere_precedent : STRING
+
+    set_declarations
+BEGIN
+    /* Initialisation des variables*/
+    longueur_phrase := 0;
+    nombre_mots := 0;
+    nombre_voyelles := 0;
+    mot_en_cours := "";
+    caractere_precedent := "";
+
+   /* Lire un caractère (c) */
+    c := ReadCharacter()
+
+   /* Tant que c n'est pas un point (.) */
+    TANT QUE c !="."
+        longueur_phrase := longueur_phrase + 1;
+
+      /* Si c est un espace (" ") et caractere_precedent n'est pas un espace */
+        SI c = " " AND caractere_precedent != " ";
+            nombre_mots ← nombre_mots + 1
+
+         /* Vérifier si mot_en_cours contient des voyelles */
+            POUR i := 1 À Longueur(mot_en_cours)
+            SI mot_en_cours[i] IS_VOYELLES()
+                nombre_voyelles := nombre_voyelles + 1;
+            FIN SI
+            FIN POUR
+
+            mot_en_cours := "";
+        FIN SI
+
+      /* Si c n'est pas un espace */
+        SI c != " "
+            mot_en_cours := mot_en_cours + c;
+        FIN SI
+
+        caractere_precedent := c;
+
+      /* Lire un nouveau caractère (c) */
+        c := ReadCharacter()
+    FIN TANT QUE
+
+   /* Process the last word */
+    SI mot_en_cours != ""
+        nombre_mots := nombre_mots + 1;
+
+      /* Vérifier si mot_en_cours contient des voyelles */
+        POUR i := 1 À Longueur(mot_en_cours)
+            SI mot_en_cours[i] IS_VOYELLES()
+            nombre_voyelles ← nombre_voyelles + 1
+            FIN SI
+        FIN POUR
+    FIN SI
+
+    /* Afficher les résultats*/
+    AFFICHER "longuer de la phrase: " longueur_phrase
+    AFFICHER "Nombre de mots: " nombre_mots
+    AFFICHER "Nombre de voyelles: " nombre_voyelles
+
+FIN
+
+/* Fonction pour vérifier si un caractère est une voyelle */
+FONCTION IS_VOYELLES(caractere)
+    caractere := caractere MAJUSCULES()
+
+    RETROURNE caractere ∈ "AEIOUY"""
+END
+
